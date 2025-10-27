@@ -1,7 +1,10 @@
 package com.shirobokov.qr_analytics_microservice.rabbitmq.listener;
 
 
+import com.shirobokov.qr_analytics_microservice.dto.IpInfoDTO;
 import com.shirobokov.qr_analytics_microservice.entity.ScanInformation;
+import com.shirobokov.qr_analytics_microservice.service.ScanInformationService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
@@ -10,12 +13,20 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class AnalyticsListener {
+
+    private final ScanInformationService scanInformationService;
+
 
     @RabbitListener(queues={"analytics_queue"})
     public void getEvent(ScanInformation scanEvent) {
 
         log.info("++++++++++ Получено сообщение из очереди: {} ++++++++++", scanEvent);
+
+        IpInfoDTO ipInfoDTO = scanInformationService.getInformationAboutIp(scanEvent.getIpAddress());
+
+        scanInformationService.mapAndSaveScanInformation(scanEvent, ipInfoDTO);
     }
 
 }

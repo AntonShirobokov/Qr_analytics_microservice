@@ -38,7 +38,7 @@ public class ScanInformation {
     private String city;
 
     @Column(name="postal_code")
-    private String postal_code;
+    private String postalCode;
 
     @Column(name="latitude")
     private Float latitude;
