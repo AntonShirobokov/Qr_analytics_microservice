@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -26,17 +28,23 @@ public class ScanInformationService {
     }
 
     public void mapAndSaveScanInformation(ScanInformation scanInformation, IpInfoDTO ipInfoDTO) {
-        scanInformation.setContinent(ipInfoDTO.getData().getContinent());
-        scanInformation.setCountry(ipInfoDTO.getData().getCountry());
-        scanInformation.setRegion(ipInfoDTO.getData().getRegion());
-        scanInformation.setCity(ipInfoDTO.getData().getCity());
-        scanInformation.setPostalCode(ipInfoDTO.getData().getPostalCode());
-        scanInformation.setLatitude(ipInfoDTO.getData().getLatitude());
-        scanInformation.setLongitude(ipInfoDTO.getData().getLongitude());
+        if (ipInfoDTO.getData() != null) {
+            scanInformation.setContinent(ipInfoDTO.getData().getContinent());
+            scanInformation.setCountry(ipInfoDTO.getData().getCountry());
+            scanInformation.setRegion(ipInfoDTO.getData().getRegion());
+            scanInformation.setCity(ipInfoDTO.getData().getCity());
+            scanInformation.setPostalCode(ipInfoDTO.getData().getPostalCode());
+            scanInformation.setLatitude(ipInfoDTO.getData().getLatitude());
+            scanInformation.setLongitude(ipInfoDTO.getData().getLongitude());
+        }
 
         scanInformationRepository.save(scanInformation);
 
         log.info("{} Сущность {} сохранена", this.getClass().getName(), scanInformation);
     }
 
+
+    public Integer getCountOfRedirect(UUID qrCodeId) {
+        return scanInformationRepository.getCountOfRedirect(qrCodeId);
+    }
 }
