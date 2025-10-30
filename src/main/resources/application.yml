@@ -1,13 +1,3 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5436/qr_analytics_db
-    username: postgres
-    password: postgres
-
-  rabbitmq:
-    host: localhost
-    username: user
-    password: password
-
-server:
-  port: 8084
+  profiles:
+    active: dev

@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://qr_analytics_microservice_db:5432/qr_analytics_db
+    username: postgres
+    password: postgres
+
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: user
+    password: password
+
+  flyway:
+    user: postgres
+    password: postgres
+    url: jdbc:postgresql://qr_analytics_microservice_db:5432/qr_analytics_db
+
+server:
+  port: 8080
